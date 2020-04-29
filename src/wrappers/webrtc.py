@@ -17,7 +17,7 @@ def xvfb_in_use(display):
 
 
 def setup_webrtc(cc_repo, video):
-    check_call(['npm', 'install'], cwd=cc_repo)
+    # check_call(['npm', 'install'], cwd=cc_repo)
 
     # check if video already exists and if its md5 checksum is correct
     video_md5 = 'cd1cc8b69951796b72419413faed493b'
