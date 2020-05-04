@@ -58,7 +58,7 @@ def main():
 
         # run signaling server on the sender side
         signaling_server_src = path.join(cc_repo, 'app.js')
-        Popen(['node', signaling_server_src, args.port])
+        Popen(['node', signaling_server_src, args.port], cwd=cc_repo)
 
         user_data_dir = path.join(utils.tmp_dir, 'webrtc-%s' % uuid.uuid4())
         cmd = ['chromium-browser',
