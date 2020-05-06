@@ -61,7 +61,7 @@ def main():
     if args.option == 'http_server':
         cur_cc = kernel_ctl.get_congestion_control()
         kernel_ctl.set_congestion_control('bbr')
-        server = HTTPServer(('localhost', args.port), HTTPRequestHandler)
+        server = HTTPServer(('localhost', int(args.port)), HTTPRequestHandler)
 
         def stop_signal_handler(signum, frame):
             server.server_close()
@@ -76,7 +76,7 @@ def main():
     if args.option == 'http_client':
         cur_cc = kernel_ctl.get_congestion_control()
         kernel_ctl.set_congestion_control('bbr')
-        url = 'http://%s:%s/' % (args.ip, args.port)
+        url = 'http://%s:%s/' % (args.ip, int(args.port))
         filename = os.path.join(utils.tmp_dir, 'index.html')
         if os.path.isfile(filename):
             os.remove(filename)
