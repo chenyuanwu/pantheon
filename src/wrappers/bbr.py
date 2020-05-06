@@ -61,7 +61,7 @@ def main():
     if args.option == 'http_server':
         cur_cc = kernel_ctl.get_congestion_control()
         kernel_ctl.set_congestion_control('bbr')
-        server = HTTPServer(('34.83.31.11', int(args.port)), HTTPRequestHandler)
+        server = HTTPServer(('0.0.0.0', int(args.port)), HTTPRequestHandler)
 
         def stop_signal_handler(signum, frame):
             server.server_close()
