@@ -8,6 +8,7 @@ from helpers import kernel_ctl, utils
 import sys
 import signal
 import os
+import time
 import urllib
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
@@ -82,8 +83,9 @@ def main():
         if os.path.isfile(filename):
             os.remove(filename)
         try:
+            start_time = time.time()
             urllib.urlretrieve(url, filename)
-            sys.stderr.write("File transfer succeed\n")
+            sys.stderr.write("File transfer succeed in %.2fs\n" % (time.time() - start_time))
         finally:
             kernel_ctl.set_congestion_control(cur_cc)
 
