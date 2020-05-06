@@ -22,6 +22,12 @@ def parse_wrapper_args(run_first):
     receiver_parser = subparsers.add_parser('receiver', help='run receiver')
     sender_parser = subparsers.add_parser('sender', help='run sender')
 
+    http_server_parser = subparsers.add_parser('http_server', help='run http server')
+    http_client_parser = subparsers.add_parser('http_client', help='run http client')
+    http_server_parser.add_argument('port', help='port for http server to listen on')
+    http_client_parser.add_argument('ip', metavar='IP', help='IP address of http server')
+    http_client_parser.add_argument('port', help='port of http server')
+
     if run_first == 'receiver':
         receiver_parser.add_argument('port', help='port to listen on')
         sender_parser.add_argument(

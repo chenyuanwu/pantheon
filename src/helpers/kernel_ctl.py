@@ -22,6 +22,23 @@ def enable_congestion_control(cc):
                % ' '.join(cc_list), shell=True)
 
 
+def get_congestion_control():
+    curr_cc = check_output('sysctl net.ipv4.tcp_congestion_control', shell=True)
+    curr_cc = curr_cc.split('=')[-1].strip()
+    return curr_cc
+
+
+def set_congestion_control(cc):
+    curr_cc = check_output('sysctl net.ipv4.tcp_congestion_control', shell=True)
+    curr_cc = curr_cc.split('=')[-1].strip()
+
+    if curr_cc != cc:
+        check_call('sudo sysctl -w net.ipv4.tcp_congestion_control=%s' % cc,
+                   shell=True)
+        sys.stderr.write('Changed system wide cc from %s to %s\n'
+                         % (curr_cc, cc))
+
+
 def check_qdisc(qdisc):
     curr_qdisc = check_output('sysctl net.core.default_qdisc', shell=True)
     curr_qdisc = curr_qdisc.split('=')[-1].strip()
