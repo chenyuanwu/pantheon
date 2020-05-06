@@ -70,8 +70,9 @@ def main():
 
         signal.signal(signal.SIGTERM, stop_signal_handler)
         signal.signal(signal.SIGINT, stop_signal_handler)
-        server.serve_forever()
         sys.stderr.write("HTTP Server Starts\n")
+        server.serve_forever()
+
 
     if args.option == 'http_client':
         cur_cc = kernel_ctl.get_congestion_control()
