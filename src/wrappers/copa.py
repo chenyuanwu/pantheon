@@ -24,7 +24,6 @@ def main(delta_conf):
 
     if args.option == 'setup':
         check_call(['makepp'], cwd=cc_repo)
-        sys.path.append(cc_repo)
         return
 
     if args.option == 'receiver':
@@ -45,6 +44,7 @@ def main(delta_conf):
         return
 
     if args.option == 'http_client':
+        sys.path.append(cc_repo)
         import pygenericcc
         sender = pygenericcc.COPASender(args.ip, int(args.port), 0)
         with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
@@ -54,6 +54,7 @@ def main(delta_conf):
         return
 
     if args.option == 'http_server':
+        sys.path.append(cc_repo)
         import pygenericcc
         receiver = pygenericcc.Receiver(int(args.port))
         with open(os.path.join(utils.tmp_dir, 'copa_index.html'), 'r') as f:
