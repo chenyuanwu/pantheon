@@ -50,14 +50,14 @@ def main(delta_conf):
         with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
             for line in f:
                 # pay attention to the type conversions between python and c++
-                sender.send(line, len(line), 1)
+                sender.send(line.encode('utf-8'), len(line.encode('utf-8')), 1)
         return
 
     if args.option == 'http_server':
         sys.path.append(cc_repo)
         import pygenericcc
         receiver = pygenericcc.Receiver(int(args.port))
-        
+
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
         if os.path.isfile(filename):
             os.remove(filename)
