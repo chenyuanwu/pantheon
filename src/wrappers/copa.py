@@ -50,7 +50,8 @@ def main(delta_conf):
         with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
             for line in f:
                 # pay attention to the type conversions between python and c++
-                sender.send(line.encode('utf-8'), len(line.encode('utf-8')), 1)
+                #sender.send(line.encode('utf-8'), len(line.encode('utf-8')), 1)
+                print type(line)
         return
 
     if args.option == 'http_server':
