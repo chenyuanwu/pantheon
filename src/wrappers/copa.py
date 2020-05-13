@@ -44,7 +44,7 @@ def main(delta_conf):
             check_call(sh_cmd, shell=True, stdout=devnull)
         return
 
-    if args.option == 'http_server':
+    if args.option == 'http_client':
         import pygenericcc
         sender = pygenericcc.COPASender(args.ip, int(args.port), 0)
         with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
@@ -53,7 +53,7 @@ def main(delta_conf):
                 sender.send(line, len(line), 1)
         return
 
-    if args.option == 'http_receiver':
+    if args.option == 'http_server':
         import pygenericcc
         receiver = pygenericcc.Receiver(int(args.port))
         with open(os.path.join(utils.tmp_dir, 'copa_index.html'), 'r') as f:
