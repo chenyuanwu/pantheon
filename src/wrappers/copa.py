@@ -3,9 +3,11 @@
 import os
 from os import path
 from subprocess import check_call
+from helpers import utils
 
 import arg_parser
 import context
+import sys
 
 
 def main(delta_conf):
@@ -22,6 +24,7 @@ def main(delta_conf):
 
     if args.option == 'setup':
         check_call(['makepp'], cwd=cc_repo)
+        sys.path.append(cc_repo)
         return
 
     if args.option == 'receiver':
@@ -40,6 +43,26 @@ def main(delta_conf):
             # suppress debugging output to stdout
             check_call(sh_cmd, shell=True, stdout=devnull)
         return
+
+    if args.option == 'http_server':
+        import pygenericcc
+        sender = pygenericcc.COPASender(args.ip, int(args.port), 0)
+        with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
+            for line in f:
+                # pay attention to the type conversions between python and c++
+                sender.send(line, len(line), 1)
+        return
+
+    if args.option == 'http_receiver':
+        import pygenericcc
+        receiver = pygenericcc.Receiver(int(args.port))
+        with open(os.path.join(utils.tmp_dir, 'copa_index.html'), 'r') as f:
+            while True:
+                # pay attention to the type conversions,
+                s = receiver.recvfrom()
+                f.write(s)
+
+
 
 
 if __name__ == '__main__':
