@@ -26,9 +26,13 @@
 	path = third_party/pantheon-tunnel
 	url = https://github.com/StanfordSNR/pantheon-tunnel.git
 	ignore = dirty
+; [submodule "third_party/genericCC"]
+; 	path = third_party/genericCC
+; 	url = https://github.com/venkatarun95/genericCC
+; 	ignore = dirty
 [submodule "third_party/genericCC"]
 	path = third_party/genericCC
-	url = https://github.com/venkatarun95/genericCC
+	url =  https://github.com/chenyuanwu/genericCC.git
 	ignore = dirty
 [submodule "third_party/fillp"]
 	path = third_party/fillp
