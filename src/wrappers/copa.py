@@ -57,7 +57,11 @@ def main(delta_conf):
         sys.path.append(cc_repo)
         import pygenericcc
         receiver = pygenericcc.Receiver(int(args.port))
-        with open(os.path.join(utils.tmp_dir, 'copa_index.html'), 'r') as f:
+        
+        filename = os.path.join(utils.tmp_dir, 'copa_index.html')
+        if os.path.isfile(filename):
+            os.remove(filename)
+        with open(filename, 'w') as f:
             while True:
                 # pay attention to the type conversions,
                 s = receiver.recvfrom()
