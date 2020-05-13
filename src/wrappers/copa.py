@@ -3,10 +3,10 @@
 import os
 from os import path
 from subprocess import check_call
+import context
 from helpers import utils
 
 import arg_parser
-import context
 import sys
 
 
