@@ -64,6 +64,7 @@ def main(delta_conf):
             while True:
                 # pay attention to the type conversions,
                 s = receiver.recvfrom()
+                print s
                 f.write(s)
 
 
