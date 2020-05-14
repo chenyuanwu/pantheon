@@ -74,7 +74,7 @@ def main(delta_conf):
             p.join()
         except:
             print traceback.format_exc()
-            utils.kill_proc_group(p, signal.SIGTERM)
+            utils.kill_proc_group(p, signal.SIGKILL)
             f.close()
         finally:
             f.close()
