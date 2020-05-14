@@ -3,7 +3,7 @@
 import os
 from os import path
 from subprocess import check_call
-from multiprocessing import Process
+from multiprocessing import Pool
 import context
 from helpers import utils
 
@@ -12,12 +12,14 @@ import sys
 import traceback
 import signal
 
-def recvfrom(receiver, f):
+def recvfrom(receiver, filename):
+    f = open(filename, 'w+')
+    f.close()
     while True:
         # pay attention to the type conversions,
         s = receiver.recvfrom()
-        print s
-        f.write(s)
+        with open(filename, 'a+') as f:
+            f.write(s)
 
 def main(delta_conf):
     args = arg_parser.receiver_first()
@@ -68,16 +70,11 @@ def main(delta_conf):
         receiver = pygenericcc.Receiver(int(args.port))
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
         try:
-            f = open(filename, 'w')
-            p = Process(target=recvfrom, args=(receiver, f))
-            p.start()
-            p.join()
+            p = Pool()
+            p.apply(recvfrom, (receiver, filename))
         except:
             print traceback.format_exc()
-            utils.kill_proc_group(p, signal.SIGKILL)
-            f.close()
-        finally:
-            f.close()
+            p.terminate()
 
 
 
