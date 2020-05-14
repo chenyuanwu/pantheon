@@ -60,12 +60,12 @@ def main(delta_conf):
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
         if os.path.isfile(filename):
             os.remove(filename)
-        while True:
-            # pay attention to the type conversions,
-            s = receiver.recvfrom()
-            print s
-            with open(filename, 'w') as f:
-                f.write(s)
+        with open(filename, 'w') as f:
+            while True:
+                # pay attention to the type conversions,
+                s = receiver.recvfrom()
+                print >> f, s
+                #f.write(s)
 
 
 
