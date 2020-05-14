@@ -9,6 +9,7 @@ from helpers import utils
 
 import arg_parser
 import sys
+import traceback
 
 
 def main(delta_conf):
@@ -70,6 +71,7 @@ def main(delta_conf):
             p = Pool()
             p.apply(recvfrom, (f,))
         except:
+            print traceback.format_exc()
             p.terminate()
         finally:
             f.close()
