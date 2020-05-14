@@ -16,6 +16,7 @@ def recvfrom(receiver, f):
     while True:
         # pay attention to the type conversions,
         s = receiver.recvfrom()
+        print s
         f.write(s)
 
 def main(delta_conf):
@@ -67,13 +68,14 @@ def main(delta_conf):
         receiver = pygenericcc.Receiver(int(args.port))
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
         try:
-            f = open(filename, 'w+')
+            f = open(filename, 'a+')
             p = Process(target=recvfrom, args=(receiver, f))
             p.start()
             p.join()
         except:
             print traceback.format_exc()
             utils.kill_proc_group(p, signal.SIGTERM)
+            f.close()
         finally:
             f.close()
 
