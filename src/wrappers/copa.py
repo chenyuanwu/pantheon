@@ -63,6 +63,7 @@ def main(delta_conf):
         while True:
             # pay attention to the type conversions,
             s = receiver.recvfrom()
+            print s
             with open(filename, 'w') as f:
                 f.write(s)
 
