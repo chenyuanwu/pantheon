@@ -3,6 +3,7 @@
 import os
 from os import path
 from subprocess import check_call
+from multiprocessing import Pool
 import context
 from helpers import utils
 
@@ -55,16 +56,23 @@ def main(delta_conf):
     if args.option == 'http_server':
         sys.path.append(cc_repo)
         import pygenericcc
-        receiver = pygenericcc.Receiver(int(args.port))
+
+        def recvfrom(f):
+            receiver = pygenericcc.Receiver(int(args.port))
+            while True:
+                # pay attention to the type conversions,
+                s = receiver.recvfrom()
+                f.write(s)
 
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
-        f = open(filename, 'w+')
-        f.close()
-        while True:
-            # pay attention to the type conversions,
-            s = receiver.recvfrom()
-            with open(filename, 'a+') as f:
-                f.write(s)
+        try:
+            f = open(filename, 'w+')
+            p = Pool()
+            p.apply(recvfrom, (f,))
+        except:
+            p.terminate()
+        finally:
+            f.close()
 
 
 
