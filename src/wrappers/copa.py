@@ -3,13 +3,14 @@
 import os
 from os import path
 from subprocess import check_call
-from multiprocessing import Pool
+from multiprocessing import Process
 import context
 from helpers import utils
 
 import arg_parser
 import sys
 import traceback
+import signal
 
 def recvfrom(receiver, f):
     while True:
@@ -67,14 +68,14 @@ def main(delta_conf):
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
         try:
             f = open(filename, 'w+')
-            p = Pool()
-            p.apply(recvfrom, (receiver, f))
+            p = Process(target=recvfrom, args=(receiver, f))
+            p.start()
+            p.join()
         except:
             print traceback.format_exc()
-            p.terminate()
+            utils.kill_proc_group(p, signal.SIGTERM)
         finally:
             f.close()
-
 
 
 
