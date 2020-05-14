@@ -68,7 +68,7 @@ def main(delta_conf):
         receiver = pygenericcc.Receiver(int(args.port))
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
         try:
-            f = open(filename, 'a+')
+            f = open(filename, 'w')
             p = Process(target=recvfrom, args=(receiver, f))
             p.start()
             p.join()
