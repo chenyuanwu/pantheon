@@ -3,7 +3,7 @@
 import os
 from os import path
 from subprocess import check_call
-from multiprocessing import Pool
+from multiprocessing import Process
 import context
 from helpers import utils
 
@@ -70,11 +70,12 @@ def main(delta_conf):
         receiver = pygenericcc.Receiver(int(args.port))
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
         try:
-            p = Pool()
-            p.apply(recvfrom, (receiver, filename))
+            p = Process(target=recvfrom, args=(receiver, f))
+            p.start()
+            p.join()
         except:
             print traceback.format_exc()
-            p.terminate()
+            utils.kill_proc_group(p, signal.SIGTERM)
 
 
 
