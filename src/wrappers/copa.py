@@ -11,6 +11,11 @@ import arg_parser
 import sys
 import traceback
 
+def recvfrom(receiver, f):
+    while True:
+        # pay attention to the type conversions,
+        s = receiver.recvfrom()
+        f.write(s)
 
 def main(delta_conf):
     args = arg_parser.receiver_first()
@@ -58,18 +63,12 @@ def main(delta_conf):
         sys.path.append(cc_repo)
         import pygenericcc
 
-        def recvfrom(f):
-            receiver = pygenericcc.Receiver(int(args.port))
-            while True:
-                # pay attention to the type conversions,
-                s = receiver.recvfrom()
-                f.write(s)
-
+        receiver = pygenericcc.Receiver(int(args.port))
         filename = os.path.join(utils.tmp_dir, 'copa_index.html')
         try:
             f = open(filename, 'w+')
             p = Pool()
-            p.apply(recvfrom, (f,))
+            p.apply(recvfrom, (receiver, f))
         except:
             print traceback.format_exc()
             p.terminate()
