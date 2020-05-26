@@ -56,8 +56,7 @@ def main():
         rat_file = path.join(cc_repo, 'RemyCC-2014-100x.dna')
         import pygenericcc
         sender = pygenericcc.REMYSender(rat_file, args.ip, int(args.port), 0)
-        #with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
-        with open(os.path.join(context.third_party_dir, 'proto-quic', 'www.example.org', 'index.html'), 'r') as f:
+        with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
             line = f.read()
             # pay attention to the type conversions between python and c++
             sender.send(line, len(line), 1)
