@@ -58,6 +58,7 @@ def main():
         sender = pygenericcc.REMYSender(rat_file, args.ip, int(args.port), 0)
         with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
             line = f.read()
+            print line
             # pay attention to the type conversions between python and c++
             sender.send(line, len(line), 1)
 
