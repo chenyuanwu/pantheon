@@ -57,7 +57,7 @@ def main(delta_conf):
     if args.option == 'http_client':
         sys.path.append(cc_repo)
         import pygenericcc
-        sender = pygenericcc.COPASender(args.ip, int(args.port), 0)
+        sender = pygenericcc.COPASender('do_ss:auto:0.1', args.ip, int(args.port), 0)
         with open(os.path.join(cc_repo, 'index.html'), 'r') as f:
             for line in f:
                 # pay attention to the type conversions between python and c++
