@@ -22,7 +22,7 @@ def recvfrom(receiver, filename):
             f.write(s)
 
 def main():
-    args = arg_parser.receiver_first()
+    args = arg_parser.receiver_first(http_reversed=True)
 
     cc_repo = path.join(context.third_party_dir, 'genericCC')
     recv_src = path.join(cc_repo, 'receiver')
@@ -51,7 +51,7 @@ def main():
         check_call(sh_cmd, shell=True)
         return
 
-    if args.option == 'http_client':
+    if args.option == 'http_server':
         sys.path.append(cc_repo)
         rat_file = path.join(cc_repo, 'RemyCC-2014-100x.dna')
         import pygenericcc
@@ -61,7 +61,7 @@ def main():
             # pay attention to the type conversions between python and c++
             sender.send(line, len(line), 1)
 
-    if args.option == 'http_server':
+    if args.option == 'http_client':
         sys.path.append(cc_repo)
         import pygenericcc
 

@@ -22,7 +22,7 @@ def recvfrom(receiver, filename):
             f.write(s)
 
 def main(delta_conf):
-    args = arg_parser.receiver_first()
+    args = arg_parser.receiver_first(http_reversed=True)
 
     cc_repo = path.join(context.third_party_dir, 'genericCC')
     recv_src = path.join(cc_repo, 'receiver')
@@ -54,7 +54,7 @@ def main(delta_conf):
             check_call(sh_cmd, shell=True, stdout=devnull)
         return
 
-    if args.option == 'http_client':
+    if args.option == 'http_server':
         sys.path.append(cc_repo)
         import pygenericcc
         sender = pygenericcc.COPASender('do_ss:auto:0.1', args.ip, int(args.port), 0)
@@ -63,7 +63,7 @@ def main(delta_conf):
             # pay attention to the type conversions between python and c++
             sender.send(line, len(line), 1)
 
-    if args.option == 'http_server':
+    if args.option == 'http_client':
         sys.path.append(cc_repo)
         import pygenericcc
 
