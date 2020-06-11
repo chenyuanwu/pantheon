@@ -6,9 +6,13 @@
 	path = third_party/proto-quic
 	url = https://github.com/google/proto-quic.git
 	ignore = dirty
+; [submodule "third_party/pcc"]
+; 	path = third_party/pcc
+; 	url = https://github.com/modong/pcc.git
+; 	ignore = dirty
 [submodule "third_party/pcc"]
 	path = third_party/pcc
-	url = https://github.com/modong/pcc.git
+	url = https://github.com/chenyuanwu/pcc.git
 	ignore = dirty
 [submodule "third_party/verus"]
 	path = third_party/verus
