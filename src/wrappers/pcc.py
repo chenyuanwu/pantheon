@@ -45,7 +45,7 @@ def main():
     if args.option == 'http_client':
         os.environ['LD_LIBRARY_PATH'] = path.join(recv_dir, 'src')
         cmd = [client_src, args.port]
-        check_call(cmd)
+        check_call(cmd, cwd=recv_dir)
         return
 
     if args.option == 'http_server':
