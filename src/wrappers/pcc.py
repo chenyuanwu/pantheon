@@ -10,13 +10,15 @@ from helpers import utils
 
 
 def main():
-    args = arg_parser.receiver_first()
+    args = arg_parser.receiver_first(http_reversed=True)
 
     cc_repo = path.join(context.third_party_dir, 'pcc')
     recv_dir = path.join(cc_repo, 'receiver')
     send_dir = path.join(cc_repo, 'sender')
     recv_src = path.join(recv_dir, 'app', 'appserver')
     send_src = path.join(send_dir, 'app', 'appclient')
+    client_src = path.join(recv_dir, 'app', 'recvfile')
+    server_src = path.join(send_dir, 'app', 'sendfile')
 
     if args.option == 'setup':
         # apply patch to reduce MTU size
@@ -39,6 +41,22 @@ def main():
         with open(os.devnull, 'w') as devnull:
             check_call(cmd, stderr=devnull)
         return
+
+    if args.option == 'http_client':
+        os.environ['LD_LIBRARY_PATH'] = path.join(recv_dir, 'src')
+        cmd = [client_src, args.port]
+        check_call(cmd)
+        return
+
+    if args.option == 'http_server':
+        os.environ['LD_LIBRARY_PATH'] = path.join(send_dir, 'src')
+        file_to_send = path.join(send_dir, 'app', 'index.html')
+        cmd = [server_src, args.ip, args.port, file_to_send]
+        # suppress debugging output to stderr
+        with open(os.devnull, 'w') as devnull:
+            check_call(cmd, stderr=devnull)
+        return
+
 
 
 if __name__ == '__main__':
